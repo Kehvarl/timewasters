@@ -29,11 +29,11 @@ module Main
 
     args.outputs.primitives << {x:640, y:360, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,
-                                angle: args.state.a,
+                                angle: args.state.b + 90,
                                 path: "sprites/circle/blue.png"}
     args.outputs.primitives << {x:640, y:360, w:100, h: 100,
                                 anchor_x: 0.5, anchor_y: 0.5,
-                                angle: args.state.b,
+                                angle: args.state.a + 90,
                                 path: "sprites/circle/green.png"}
   end
 end

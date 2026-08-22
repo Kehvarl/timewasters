@@ -23,6 +23,10 @@ module Main
       args.state.b -= 10
     end
 
+    if args.state.b == args.state.a
+      args.state.b = args.state.a
+    end
+
     if args.state.b < -360
       args.state.b += 360
     end

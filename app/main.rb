@@ -3,7 +3,6 @@ module Main
     args.state.a = 0
     args.state.b = 0
     args.state.y = 360
-    args.state.vy = 6
     args.state.delay = 10
   end
 
@@ -24,6 +23,8 @@ module Main
       args.state.y += 360
     end
 
+    ypos = 420 * Math.sin(args.state.y.to_radians).abs() + 150
+
     args.state.a -= 6
 
     if args.state.a < -360
@@ -39,7 +40,7 @@ module Main
       args.state.b += 360
     end
 
-    ypos = 420 * Math.sin(args.state.y.to_radians).abs() + 150
+
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,
                                 angle: args.state.b + 90,

@@ -49,5 +49,9 @@ module Main
                                 anchor_x: 0.5, anchor_y: 0.5,
                                 angle: args.state.a + 90,
                                 path: "sprites/circle/green.png"}
+    args.outputs.primitives << {x:640, y:ypos, w:50, h: 50,
+                                anchor_x: 0.5, anchor_y: 0.5,
+                                angle: -(args.state.a + 90),
+                                path: "sprites/circle/white.png"}
   end
 end

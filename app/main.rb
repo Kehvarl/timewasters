@@ -2,6 +2,7 @@ module Main
   def init args
     args.state.a = 0
     args.state.b = 0
+    args.state.c = 0
     args.state.y = 360
     args.state.delay = 10
   end
@@ -43,6 +44,8 @@ module Main
     # You know what this needs?
     # Buttons!
     # And you can try to line them up!
+
+    #
 
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,

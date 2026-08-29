@@ -45,7 +45,8 @@ module Main
     # Buttons!
     # And you can try to line them up!
 
-    #
+    # Honestly there has to be a game in the sine movement too
+    # What else can we build?
 
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
@@ -59,6 +60,6 @@ module Main
     args.outputs.primitives << {x:640, y:ypos, w:50, h: 50,
                                 anchor_x: 0.5, anchor_y: 0.5,
                                 angle: -(args.state.a + 90),
-                                path: "sprites/circle/white.png"}
+                                path: "sprites/square/white.png"}
   end
 end

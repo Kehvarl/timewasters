@@ -44,6 +44,9 @@ module Main
     # You know what this needs?
     # Buttons!
     # And you can try to line them up!
+    # Button 1 moves A, B
+    # Button 2 moves B, C
+    # Button 3 moves... C, A?   Just B?
 
     # Honestly there has to be a game in the sine movement too
     # What else can we build?

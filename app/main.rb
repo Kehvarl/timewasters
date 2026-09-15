@@ -26,19 +26,23 @@ module Main
 
     ypos = 420 * Math.sin(args.state.y.to_radians).abs() + 150
 
-    args.state.a -= 6
+    args.state.a -= rand(20)
 
     if args.state.a < -360
       args.state.a += 360
-      args.state.b -= 10
-    end
-
-    if args.state.b == args.state.a
-      args.state.b = args.state.a
+      args.state.b -= rand(5) + 5
     end
 
     if args.state.b < -360
       args.state.b += 360
+    end
+
+    if rand(100) < 5
+      args.state.c -= 10
+    end
+
+    if args.state.c < -360
+      args.state.c += 360
     end
 
     # You know what this needs?
@@ -54,7 +58,7 @@ module Main
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,
-                                angle: args.state.b + 90,
+                                angle: args.state.c + 90,
                                 path: "sprites/circle/blue.png"}
     args.outputs.primitives << {x:640, y:ypos, w:100, h: 100,
                                 anchor_x: 0.5, anchor_y: 0.5,

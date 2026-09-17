@@ -55,8 +55,6 @@ module Main
     # Honestly there has to be a game in the sine movement too
     # What else can we build?
 
-    # more nonprogress tonight.
-
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,

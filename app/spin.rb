@@ -1,0 +1,72 @@
+module Main
+  def init args
+    args.state.a = 0
+    args.state.b = 0
+    args.state.c = 0
+    args.state.y = 360
+    args.state.delay = 10
+  end
+
+  def tick args
+    if args.state.tick_count == 0
+      init args
+    end
+
+    args.state.delay -= 1
+
+    if args.state.delay <= 0
+      args.state.delay = 10
+    end
+
+    args.state.y -= 0.6
+
+    if args.state.y < -360
+      args.state.y += 360
+    end
+
+    ypos = 420 * Math.sin(args.state.y.to_radians).abs() + 150
+
+    args.state.a -= rand(20)
+
+    if args.state.a < -360
+      args.state.a += 360
+      args.state.b -= rand(5) + 5
+    end
+
+    if args.state.b < -360
+      args.state.b += 360
+    end
+
+    if rand(100) < 5
+      args.state.c -= 10
+    end
+
+    if args.state.c < -360
+      args.state.c += 360
+    end
+
+    # You know what this needs?
+    # Buttons!
+    # And you can try to line them up!
+    # Button 1 moves A, B
+    # Button 2 moves B, C
+    # Button 3 moves... C, A?   Just B?
+
+    # Honestly there has to be a game in the sine movement too
+    # What else can we build?
+
+
+    args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
+                                anchor_x: 0.5, anchor_y: 0.5,
+                                angle: args.state.c + 90,
+                                path: "sprites/circle/blue.png"}
+    args.outputs.primitives << {x:640, y:ypos, w:100, h: 100,
+                                anchor_x: 0.5, anchor_y: 0.5,
+                                angle: args.state.a + 90,
+                                path: "sprites/circle/green.png"}
+    args.outputs.primitives << {x:640, y:ypos, w:50, h: 50,
+                                anchor_x: 0.5, anchor_y: 0.5,
+                                angle: -(args.state.a + 90),
+                                path: "sprites/square/white.png"}
+  end
+end

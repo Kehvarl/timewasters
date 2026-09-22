@@ -8,13 +8,15 @@ module Main
       init args
     end
 
-    if rand(1000) < 100
+    if rand(1000) < 1000
       w = rand(500) + 50
       h = rand(300) + 50
       x = rand(1280 - w)
       y = rand(720 - h)
 
-      args.state.outs << {x:x, y:y, w:w, h:w, r:rand(128) + 64, g:rand(128) + 64, b:rand(128) + 64}.solid!
+      args.state.outs << {x:x, y:y, w:w, h:w,
+                          path:'sprites/square/white.png',
+                          r:rand(128) + 64, g:rand(128) + 64, b:rand(128) + 64}.sprite!
     end
 
     args.outputs.primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!

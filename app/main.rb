@@ -13,8 +13,10 @@ module Main
       h = rand(300) + 50
       x = rand(1280 - w)
       y = rand(720 - h)
+      #r = [0, 45, 90, 135, 180, 225, 270].sample
+      r = rand(360)
 
-      args.state.outs << {x:x, y:y, w:w, h:w,
+      args.state.outs << {x:x, y:y, w:w, h:w, angle:r,
                           path:'sprites/square/white.png',
                           r:rand(128) + 64, g:rand(128) + 64, b:rand(128) + 64}.sprite!
     end

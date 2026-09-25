@@ -14,7 +14,7 @@ module Main
       x = rand(1280 - w)
       y = rand(720 - h)
       #r = [0, 45, 90, 135, 180, 225, 270].sample
-      r = rand(360)
+      r = rand(180)
 
       args.state.outs << {x:x+10, y:y-10, w:w, h:w, angle:r,
                           path:'sprites/square/black.png'}.sprite!

@@ -16,10 +16,10 @@ module Main
       #r = [0, 45, 90, 135, 180, 225, 270].sample
       r = rand(180)
 
-      args.state.outs << {x:x+10, y:y-10, w:w, h:w, angle:r,
-                          path:'sprites/square/black.png'}.sprite!
+      args.state.outs << {x:x+5, y:y-5, w:w, h:w, angle:r,
+                          path:'sprites/hexagon/black.png'}.sprite!
       args.state.outs << {x:x, y:y, w:w, h:w, angle:r,
-                          path:'sprites/square/white.png',
+                          path:'sprites/hexagon/white.png',
                           r:rand(128) + 64, g:rand(128) + 64, b:rand(128) + 64}.sprite!
     end
 

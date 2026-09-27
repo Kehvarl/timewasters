@@ -8,7 +8,7 @@ module Main
       init args
     end
 
-    if rand(1000) < 1000
+    if true # rand(1000) < 1000
       w = rand(500) + 50
       h = rand(300) + 50
       x = rand(1280 - w)

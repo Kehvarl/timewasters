@@ -11,10 +11,15 @@ module Main
     return newline
   end
 
-  def next_line line, born=[2,3], survive=[2,4]
+  def next_line line, radius=2, born=[2,3], survive=[2,4]
     newline = Array.new(line.length, 0)
     line.each_with_index do |v, i|
-      neighbors = line[(i - 2) % line.length] + line[(i - 1) % line.length] + line[(i + 1) % line.length] + line[(i + 2) % line.length]
+      neighbors = 0
+      (-radius..radius).each do |r|
+        if r != 0
+          neighbors += line[(i - r) % line.length]
+        end
+      end
       if v == 0 and born.include?(neighbors)
         newline[i] = 1
       elsif v == 1 and survive.include?(neighbors)

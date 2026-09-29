@@ -36,7 +36,7 @@ module Main
       if line
         line.each_with_index do |v, i|
           if v == 1
-            out << {x:i*20, y:y, w:20, h:20, path:'sprites/circle/blue.png'}.sprite!
+            out << {x:i*20, y:y, w:20, h:20, path:'sprites/square/blue.png'}.sprite!
           end
         end
         y -= 20

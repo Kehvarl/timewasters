@@ -1,6 +1,8 @@
 module Main
   def init args
     args.state.lines = []
+    args.state.delay_current=10
+    args.state.delay=10
   end
 
   def randomline size=63
@@ -48,11 +50,14 @@ module Main
   def tick args
     if args.state.tick_count == 0
       init args
-
       args.state.lines << randomline()
     end
 
-    args.state.lines << next_line(args.state.lines.last())
+    args.state.delay_current -= 1
+    if args.state.delay_current <= 0
+      args.state.lines << next_line(args.state.lines.last())
+      args.state.delay_current = args.state.delay
+    end
 
     args.outputs.primitives << render(args)
   end

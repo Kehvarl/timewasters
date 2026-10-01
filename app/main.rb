@@ -53,6 +53,12 @@ module Main
       args.state.lines << randomline()
     end
 
+    if args.inputs.mouse.click
+      #init args
+      args.state.lines << randomline()
+      args.state.delay_current = args.state.delay
+    end
+
     args.state.delay_current -= 1
     if args.state.delay_current <= 0
       args.state.lines << next_line(args.state.lines.last())

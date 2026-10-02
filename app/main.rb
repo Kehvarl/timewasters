@@ -54,7 +54,6 @@ module Main
     end
 
     if args.inputs.mouse.click
-      #init args
       args.state.lines << randomline()
       args.state.delay_current = args.state.delay
     end

@@ -25,7 +25,7 @@ module Main
       if v == 0 and born.include?(neighbors)
         newline[i] = 1
       elsif v == 1 and survive.include?(neighbors)
-        newline[i] = 1
+        newline[i] = 2
       end
     end
     return newline
@@ -38,7 +38,9 @@ module Main
       if line
         line.each_with_index do |v, i|
           if v == 1
-            out << {x:i*20, y:y, w:20, h:20, path:'sprites/square/blue.png'}.sprite!
+            out << {x:i*20, y:y, w:20, h:20, path:'sprites/hexagon/green.png'}.sprite!
+          elsif v == 2
+            out << {x:i*20, y:y, w:20, h:20, path:'sprites/hexagon/blue.png'}.sprite!
           end
         end
         y -= 20

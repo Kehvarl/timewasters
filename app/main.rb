@@ -19,12 +19,14 @@ module Main
       neighbors = 0
       (-radius..radius).each do |r|
         if r != 0
-          neighbors += line[(i - r) % line.length]
+          if line[(i - r) % line.length] > 0
+            neighbors += 1
+          end
         end
       end
       if v == 0 and born.include?(neighbors)
         newline[i] = 1
-      elsif v == 1 and survive.include?(neighbors)
+      elsif v == 1 or v == 2 and survive.include?(neighbors)
         newline[i] = 2
       end
     end

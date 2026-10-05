@@ -3,6 +3,14 @@ module Main
     args.state.lines = []
     args.state.delay_current=10
     args.state.delay=10
+    newline = Array.new(63, 0)
+    newline[29] = 1
+    newline[30] = 1
+    newline[31] = 1
+    newline[33] = 1
+    newline[34] = 1
+    newline[35] = 1
+    args.state.face = newline
   end
 
   def randomline size=63
@@ -59,6 +67,11 @@ module Main
 
     if args.inputs.mouse.click
       args.state.lines << randomline()
+      args.state.delay_current = args.state.delay
+    end
+
+    if args.inputs.keyboard.key_down.f
+      args.state.lines << args.state.face
       args.state.delay_current = args.state.delay
     end
 

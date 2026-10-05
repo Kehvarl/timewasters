@@ -1,10 +1,147 @@
 * EXCEPTION:
 * ERROR:
-Undefined method elif for main.
+** :a "A"
+** :b "B"
+** :c "C"
+** :d "D"
+** :e "E"
+** :f "F"
+** :g "G"
+** :h "H"
+** :i "I"
+** :j "J"
+** :k "K"
+** :l "L"
+** :m "M"
+** :n "N"
+** :o "O"
+** :p "P"
+** :q "Q"
+** :r "R"
+** :s "S"
+** :t "T"
+** :u "U"
+** :v "V"
+** :w "W"
+** :x "X"
+** :y "Y"
+** :z "Z"
+** :exclamation_point "!"
+** :zero "0"
+** :one "1"
+** :two "2"
+** :three "3"
+** :four "4"
+** :five "5"
+** :six "6"
+** :seven "7"
+** :eight "8"
+** :nine "9"
+** :backspace ""
+** :escape ""
+** :enter ""
+** :tab ""
+** :open_round_brace "("
+** :close_round_brace ")"
+** :open_curly_brace "{"
+** :close_curly_brace "}"
+** :open_square_brace "["
+** :close_square_brace "]"
+** :colon ":"
+** :semicolon ";"
+** :equal "="
+** :hyphen "-"
+** :space ""
+** :dollar "$"
+** :double_quotation_mark """
+** :single_quotation_mark "'"
+** :backtick "`"
+** :tilde "~"
+** :period "."
+** :comma ","
+** :pipe "|"
+** :underscore "_"
+** :hash "#"
+** :plus "+"
+** :at "@"
+** :forward_slash "/"
+** :back_slash "\"
+** :asterisk "*"
+** :less_than "<"
+** :greater_than ">"
+** :caret "^"
+** :ampersand "&"
+** :superscript_two "²"
+** :section "§"
+** :question_mark "?"
+** :percent "%"
+** :ordinal_indicator "º"
+** :caps_lock raw_key == 1073741881
+** :f1 raw_key == 1073741882
+** :f2 raw_key == 1073741883
+** :f3 raw_key == 1073741884
+** :f4 raw_key == 1073741885
+** :f5 raw_key == 1073741886
+** :f6 raw_key == 1073741887
+** :f7 raw_key == 1073741888
+** :f8 raw_key == 1073741889
+** :f9 raw_key == 1073741890
+** :f10 raw_key == 1073741891
+** :f11 raw_key == 1073741892
+** :f12 raw_key == 1073741893
+** :print_screen raw_key == 1073741894
+** :scroll_lock raw_key == 1073741895
+** :pause raw_key == 1073741896
+** :insert raw_key == 1073741897
+** :home raw_key == 1073741898
+** :page_up raw_key == 1073741899
+** :delete raw_key == 127
+** :end raw_key == 1073741901
+** :page_down raw_key == 1073741902
+** :right_arrow raw_key == 1073741903
+** :left_arrow raw_key == 1073741904
+** :down_arrow raw_key == 1073741905
+** :up_arrow raw_key == 1073741906
+** :num_lock raw_key == 1073741907
+** :kp_divide raw_key == 1073741908
+** :kp_multiply raw_key == 1073741909
+** :kp_minus raw_key == 1073741910
+** :kp_plus raw_key == 1073741911
+** :kp_enter raw_key == 1073741912
+** :kp_one raw_key == 1073741913
+** :kp_two raw_key == 1073741914
+** :kp_three raw_key == 1073741915
+** :kp_four raw_key == 1073741916
+** :kp_five raw_key == 1073741917
+** :kp_six raw_key == 1073741918
+** :kp_seven raw_key == 1073741919
+** :kp_eight raw_key == 1073741920
+** :kp_nine raw_key == 1073741921
+** :kp_zero raw_key == 1073741922
+** :kp_period raw_key == 1073741923
+** :kp_equals raw_key == 1073741927
+** :control_left raw_key == 1073742048
+** :control raw_key == 1073742052
+** :shift_left raw_key == 1073742049
+** :shift raw_key == 1073742053
+** :alt_left raw_key == 1073742050
+** :alt raw_key == 1073742054
+** :meta_left raw_key == 1073742051
+** :meta raw_key == 1073742055
+** :control_right raw_key == 1073742052
+** :shift_right raw_key == 1073742053
+** :alt_right raw_key == 1073742054
+** :meta_right raw_key == 1073742055
+** :ac_search raw_key == 1073742092
+** :ac_home raw_key == 1073742093
+** :ac_back raw_key == 1073742094
+** :ac_forward raw_key == 1073742095
+** :ac_stop raw_key == 1073742096
+** :ac_refresh raw_key == 1073742097
+** :ac_bookmarks raw_key == 1073742098
 
+There is no key on the keyboard called :keydown. Did you mean ?.
+Full list of available keys =:points_up:=.
 
 ** Backtrace:
-*** app/main.rb:42:in render
-*** app/main.rb:39:in render
-*** app/main.rb:37:in render
-*** app/main.rb:69:in tick
+*** app/main.rb:73:in tick

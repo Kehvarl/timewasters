@@ -73,12 +73,7 @@ module Main
     out
   end
 
-  def tick args
-    if args.state.tick_count == 0
-      init args
-      args.state.lines << randomline()
-    end
-
+  def handle_input args
     if args.inputs.mouse.click
       args.state.lines << randomline()
       args.state.delay_current = args.state.delay
@@ -93,6 +88,15 @@ module Main
       args.state.lines << glider()
       args.state.delay_current = args.state.delay
     end
+  end
+
+  def tick args
+    if args.state.tick_count == 0
+      init args
+      args.state.lines << randomline()
+    end
+
+    handle_input(args)
 
     args.state.delay_current -= 1
     if args.state.delay_current <= 0

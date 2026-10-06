@@ -3,14 +3,6 @@ module Main
     args.state.lines = []
     args.state.delay_current=10
     args.state.delay=10
-    newline = Array.new(63, 0)
-    newline[29] = 1
-    newline[30] = 1
-    newline[31] = 1
-    newline[33] = 1
-    newline[34] = 1
-    newline[35] = 1
-    args.state.face = newline
   end
 
   def randomline size=63
@@ -18,6 +10,28 @@ module Main
     size.times do
       newline << [0,1].sample()
     end
+    return newline
+  end
+
+  def face size=63
+    newline = Array.new(size, 0)
+    midpoint = size.div(2)
+    newline[midpoint - 3] = 1
+    newline[midpoint - 2] = 1
+    newline[midpoint - 1] = 1
+    newline[midpoint + 1] = 1
+    newline[midpoint + 2] = 1
+    newline[midpoint + 3] = 1
+    return newline
+  end
+
+  def glider size=63
+    newline = Array.new(size, 0)
+    midpoint = size.div(2)
+    newline[midpoint - 3] = 1
+    newline[midpoint - 1] = 1
+    newline[midpoint]     = 1
+    newline[midpoint + 1] = 1
     return newline
   end
 
@@ -71,7 +85,12 @@ module Main
     end
 
     if args.inputs.keyboard.key_down.f
-      args.state.lines << args.state.face
+      args.state.lines << face()
+      args.state.delay_current = args.state.delay
+    end
+
+    if args.inputs.keyboard.key_down.g
+      args.state.lines << glider()
       args.state.delay_current = args.state.delay
     end
 

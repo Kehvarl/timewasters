@@ -79,6 +79,11 @@ module Main
       args.state.delay_current = args.state.delay
     end
 
+    if args.inputs.keyboard.key_down.r
+      args.state.lines << randomline()
+      args.state.delay_current = args.state.delay
+    end
+
     if args.inputs.keyboard.key_down.f
       args.state.lines << face()
       args.state.delay_current = args.state.delay

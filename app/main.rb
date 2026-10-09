@@ -35,6 +35,18 @@ module Main
     return newline
   end
 
+  def spider size=63
+    newline = Array.new(size, 0)
+    midpoint = size.div(2)
+    newline[midpoint - 3] = 1
+    newline[midpoint - 2] = 1
+    newline[midpoint - 1] = 1
+    newline[midpoint]     = 1
+    newline[midpoint + 1] = 1
+    newline[midpoint + 2] = 1    
+    return newline
+  end
+
   def next_line line, radius=2, born=[2,3], survive=[2,4]
     newline = Array.new(line.length, 0)
     line.each_with_index do |v, i|
@@ -91,6 +103,11 @@ module Main
 
     if args.inputs.keyboard.key_down.g
       args.state.lines << glider()
+      args.state.delay_current = args.state.delay
+    end
+
+    if args.inputs.keyboard.key_down.s
+      args.state.lines << spider()
       args.state.delay_current = args.state.delay
     end
   end

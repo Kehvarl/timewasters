@@ -13,38 +13,25 @@ module Main
     return newline
   end
 
-  def face size=63
+  def patternline pattern=[0], size=63
     newline = Array.new(size, 0)
     midpoint = size.div(2)
-    newline[midpoint - 3] = 1
-    newline[midpoint - 2] = 1
-    newline[midpoint - 1] = 1
-    newline[midpoint + 1] = 1
-    newline[midpoint + 2] = 1
-    newline[midpoint + 3] = 1
+    pattern.each do |i|
+      newline[midpoint + i] = 1
+    end
     return newline
+  end
+
+  def face size=63
+    patternline pattern=[-3, -2, -1, 1, 2, 3]
   end
 
   def glider size=63
-    newline = Array.new(size, 0)
-    midpoint = size.div(2)
-    newline[midpoint - 3] = 1
-    newline[midpoint - 1] = 1
-    newline[midpoint]     = 1
-    newline[midpoint + 1] = 1
-    return newline
+    patternline pattern=[-3, -1, 0, 1]
   end
 
   def spider size=63
-    newline = Array.new(size, 0)
-    midpoint = size.div(2)
-    newline[midpoint - 3] = 1
-    newline[midpoint - 2] = 1
-    newline[midpoint - 1] = 1
-    newline[midpoint]     = 1
-    newline[midpoint + 1] = 1
-    newline[midpoint + 2] = 1    
-    return newline
+    patternline pattern=[-3, -2, -1, 0, 1, 2]
   end
 
   def next_line line, radius=2, born=[2,3], survive=[2,4]

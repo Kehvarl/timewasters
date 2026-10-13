@@ -93,7 +93,6 @@ module Main
     if args.state.delay_current <= 0
       args.state.delay_current = args.state.delay
 
-      # Cellular Automota caves. Next iteration
       if args.state.iterations > 0
         args.state.grid = process_grid(args.state.grid)
         args.state.iterations -= 1

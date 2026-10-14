@@ -54,6 +54,22 @@ module Main
     return new_grid
   end
 
+  def find_regions grid
+    scanned = []
+    regions = {0:[]}
+    current_region = 0
+    # for cell in grid
+    #  if cell in scanned, continue
+    #  if cell is wall, continue
+    #  Start flood-fill from cell
+    #   Find all connected non-wall, non-scanned cells
+    #   add cell to current region
+    #   add cell to scanned
+    #  increment current region
+    # result: list of regions and all cells in each region
+    #  Maybe we should make the cells encode both wall/empty and region for faster lookup
+  end
+
   def handle_input args
 
     if args.inputs.keyboard.key_down.r

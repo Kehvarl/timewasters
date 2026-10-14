@@ -1,13 +1,11 @@
 * EXCEPTION:
 * ERROR:
-Undefined method continue for main.
+Undefined method cell for main.
 
 
 ** Backtrace:
-*** app/main.rb:27:in neighbor_count
-*** app/main.rb:25:in neighbor_count
-*** app/main.rb:23:in neighbor_count
+*** app/main.rb:48:in process_grid
 *** app/main.rb:43:in process_grid
 *** app/main.rb:42:in process_grid
-*** app/main.rb:41:in process_grid
-*** app/main.rb:88:in tick
+*** app/main.rb:82:in handle_input
+*** app/main.rb:106:in tick

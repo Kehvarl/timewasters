@@ -37,15 +37,15 @@ module Main
     return neighbors
   end
 
-  def process_grid grid, keep=[4,5]
+  def process_grid grid, keep=4, create=5
     new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
     grid.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
-        if col == 1
-          neighbors = neighbor_count(grid, row_i, col_i)
-          if keep.include?(neighbors)
-            new_grid[row_i][col_i] = 1
-          end
+        neighbors = neighbor_count(grid, row_i, col_i)
+        if neighbors >= 5
+          new_grid[row_i][col_i] = 1
+        elsif neighbors == 4
+          new_grid[row_i][col_i] = col
         else
           new_grid[row_i][col_i] = 0
         end
@@ -56,7 +56,7 @@ module Main
 
   def find_regions grid
     scanned = []
-    regions = {0:[]}
+    #regions = {0:[]}
     current_region = 0
     # for cell in grid
     #  if cell in scanned, continue

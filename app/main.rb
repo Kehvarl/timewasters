@@ -11,7 +11,7 @@ module Main
     new_grid = Array.new(height) { Array.new(width, 0) }
     new_grid.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
-        if rand(100) <= 65
+        if rand(100) <= 45
           new_grid[row_i][col_i] = 1
         end
       end

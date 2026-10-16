@@ -54,9 +54,24 @@ module Main
     return new_grid
   end
 
+  def invert_grid grid
+    new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
+    grid.each_with_index do |row, row_i|
+      row.each_with_index do |col, col_i|
+        if col == 0
+          new_grid[row_i][col_i] = 1
+        else
+          new_grid[row_i][col_i] = 0
+        end
+      end
+    end
+    return new_grid
+  end
+
   def find_regions grid
     scanned = []
-    #regions = {0:[]}
+    regions = {}
+    regions[0] = []
     current_region = 0
     # for cell in grid
     #  if cell in scanned, continue
@@ -80,6 +95,10 @@ module Main
 
     if args.inputs.keyboard.key_down.s
       args.state.grid = process_grid(args.state.grid)
+    end
+
+    if args.inputs.keyboard.key_down.i
+      args.state.grid = invert_grid(args.state.grid)
     end
   end
 

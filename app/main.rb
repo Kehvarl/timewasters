@@ -11,7 +11,7 @@ module Main
     new_grid = Array.new(height) { Array.new(width, 0) }
     new_grid.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
-        if rand(100) <= 45
+        if rand(100) <= 55
           new_grid[row_i][col_i] = 1
         end
       end
@@ -68,21 +68,37 @@ module Main
     return new_grid
   end
 
+  def flood_fill grid, start
+    scanned = []
+    region_cells = []
+
+    #  Start flood-fill from cell
+    #   Find all connected non-wall, non-scanned cells
+    #   add cell to current region
+    #   add cell to scanned
+  end
+
   def find_regions grid
     scanned = []
     regions = {}
     regions[0] = []
     current_region = 0
     # for cell in grid
-    #  if cell in scanned, continue
-    #  if cell is wall, continue
-    #  Start flood-fill from cell
-    #   Find all connected non-wall, non-scanned cells
-    #   add cell to current region
-    #   add cell to scanned
-    #  increment current region
+    grid.each_with_index do |row, row_i|
+      row.each_with_index do |col, col_i|
+        pos = [row_i, col_i]
+        if scanned.include?(pos)
+          next
+        end
+        if col == 1
+          next
+        end
+        regions[current_region] = flood_fill(grid, pos)
+        current_region +=  1
+      end
+    end
     # result: list of regions and all cells in each region
-    #  Maybe we should make the cells encode both wall/empty and region for faster lookup
+    # Maybe we should make the cells encode both wall/empty and region for faster lookup
   end
 
   def handle_input args

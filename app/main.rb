@@ -14,11 +14,11 @@ module Main
   end
 
   def make_map height, width
-    new_grid = Array.new(height) { Array.new(width, 0) }
+    new_grid = Array.new(height) { Array.new(width, -2) }
     new_grid.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
-        if rand(100) <= 55
-          new_grid[row_i][col_i] = 1
+        if rand(100) <= 50
+          new_grid[row_i][col_i] = -1
         end
       end
     end
@@ -34,7 +34,7 @@ module Main
           next
         else
           x = (col + c) % grid[0].length()
-          if grid[y][x] == 1
+          if grid[y][x] > -2
             neighbors += 1
           end
         end
@@ -46,14 +46,14 @@ module Main
   def process_grid grid, keep=4, create=5
     new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
     grid.each_with_index do |row, row_i|
-      row.each_with_index do |col, col_i|
+      row.each_with_index do |cell, col_i|
         neighbors = neighbor_count(grid, row_i, col_i)
-        if neighbors >= 5
-          new_grid[row_i][col_i] = 1
-        elsif neighbors == 4
+        if neighbors >= create
+          new_grid[row_i][col_i] = -1
+        elsif neighbors == keep
           new_grid[row_i][col_i] = col
         else
-          new_grid[row_i][col_i] = 0
+          new_grid[row_i][col_i] = -2
         end
       end
     end
@@ -63,51 +63,39 @@ module Main
   def invert_grid grid
     new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
     grid.each_with_index do |row, row_i|
-      row.each_with_index do |col, col_i|
-        if col == 0
-          new_grid[row_i][col_i] = 1
+      row.each_with_index do |cell, col_i|
+        if cell == -2
+          new_grid[row_i][col_i] = -1
         else
-          new_grid[row_i][col_i] = 0
+          new_grid[row_i][col_i] = -2
         end
       end
     end
     return new_grid
   end
 
-  def flood_fill grid, start, scanned
+  def flood_fill grid, start, id
     rows = grid.length
     cols = grid[0].length
 
     region = []
     queue = [start]
-    scanned[start[0]][start[1]] = true
+    grid[start[0]][start[1]] = id
 
     while queue.length  > 0
       row, col = queue.pop
-
       region << [row, col]
-
-      neighbors = [
-        [row - 1, col],
-        [row + 1, col],
-        [row, col - 1],
-        [row, col + 1]
-      ]
-
+      neighbors = [[row - 1, col],[row + 1, col],[row, col - 1],[row, col + 1]]
       neighbors.each do |pos|
         r, c = pos
-
         if r < 0 || r >= rows || c < 0 || c >= cols
           next
         end
-        if grid[r][c] == 1
-          next
-        end
-        if scanned[r][c]
+        if grid[r][c] != -1
           next
         end
 
-        scanned[r][c] = true
+        grid[r][c] = id
         queue << pos
       end
     end
@@ -118,20 +106,16 @@ module Main
   def find_regions grid
     rows = grid.length
     cols = grid[0].length
-    scanned = Array.new(rows) { Array.new(cols, false) }
     regions = {}
     current_region = 0
     # for cell in grid
     grid.each_with_index do |row, row_i|
-      row.each_with_index do |col, col_i|
+      row.each_with_index do |cell, col_i|
         pos = [row_i, col_i]
-        if scanned[row_i][col_i]
+        if cell != -1
           next
         end
-        if col == 1
-          next
-        end
-        regions[current_region] = flood_fill(grid, pos, scanned)
+        regions[current_region] = flood_fill(grid, pos, current_region)
         current_region +=  1
       end
     end
@@ -140,32 +124,30 @@ module Main
     return regions
   end
 
-  def carve_horizontal_tunnel grid, start_pos, end_pos, region
+  def carve_horizontal_tunnel grid, start_pos, end_pos, tunnel
     sy, sx = start_pos
     ey, ex = end_pos
 
     ([sx, ex].min() .. [sx, ex].max).each do |x|
       if args.state.grid[sy][x] == 0
-        args.state.grid[sy][x] = 1
-        region << [sy, x]
+        tunnel << [sy, x]
       end
     end
 
-    return grid
+    return tunnel
   end
 
-  def carve_vertical_tunnel grid, start_pos, end_pos, region
+  def carve_vertical_tunnel grid, start_pos, end_pos, tunnel
     sy, sx = start_pos
     ey, ex = end_pos
 
     ([sy, ey].min() .. [sy, ey].max).each do |y|
       if args.state.grid[y][sx] == 0
-        args.state.grid[y][sx] = 1
-        region << [sy, x]
+        tunnel << [sy, x]
       end
     end
 
-    return grid
+    return tunnel
   end
 
   def carve_tunnel grid, start_pos, end_pos, regions
@@ -216,7 +198,7 @@ module Main
     y = 690-size
     args.state.grid.each do |row|
       row.each_with_index do |v, i|
-        if v == 1
+        if v == -2
           out << {x:i*size+280, y:y, w:size, h:size, path:'sprites/hexagon/green.png'}.sprite!
         end
       end

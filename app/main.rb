@@ -3,8 +3,14 @@ module Main
     args.state.delay_current=10
     args.state.delay=10
 
+    restart(args)
+  end
+
+  def restart args
+    args.state.grid = make_map(64, 64)
     args.state.iterations = 0
-    args.state.grid = make_map(128, 128)
+    args.state.regions = {}
+    args.state.delay_current = args.state.delay
   end
 
   def make_map height, width
@@ -68,45 +74,76 @@ module Main
     return new_grid
   end
 
-  def flood_fill grid, start
-    scanned = []
-    region_cells = []
+  def flood_fill grid, start, scanned
+    rows = grid.length
+    cols = grid[0].length
 
-    #  Start flood-fill from cell
-    #   Find all connected non-wall, non-scanned cells
-    #   add cell to current region
-    #   add cell to scanned
+    region = []
+    queue = [start]
+    scanned[start[0]][start[1]] = true
+
+    while queue.length  > 0
+      row, col = queue.pop
+
+      region << [row, col]
+
+      neighbors = [
+        [row - 1, col],
+        [row + 1, col],
+        [row, col - 1],
+        [row, col + 1]
+      ]
+
+      neighbors.each do |pos|
+        r, c = pos
+
+        if r < 0 || r >= rows || c < 0 || c >= cols
+          next
+        end
+        if grid[r][c] == 1
+          next
+        end
+        if scanned[r][c]
+          next
+        end
+
+        scanned[r][c] = true
+        queue << pos
+      end
+    end
+
+    region
   end
 
   def find_regions grid
-    scanned = []
+    rows = grid.length
+    cols = grid[0].length
+    scanned = Array.new(rows) { Array.new(cols, false) }
     regions = {}
-    regions[0] = []
     current_region = 0
     # for cell in grid
     grid.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
         pos = [row_i, col_i]
-        if scanned.include?(pos)
+        if scanned[row_i][col_i]
           next
         end
         if col == 1
           next
         end
-        regions[current_region] = flood_fill(grid, pos)
+        regions[current_region] = flood_fill(grid, pos, scanned)
         current_region +=  1
       end
     end
     # result: list of regions and all cells in each region
     # Maybe we should make the cells encode both wall/empty and region for faster lookup
+    return regions
   end
 
   def handle_input args
 
     if args.inputs.keyboard.key_down.r
-      args.state.grid = make_map(128, 128)
-      args.state.iterations = 0
-      args.state.delay_current = args.state.delay
+      restart(args)
     end
 
     if args.inputs.keyboard.key_down.s
@@ -115,6 +152,10 @@ module Main
 
     if args.inputs.keyboard.key_down.i
       args.state.grid = invert_grid(args.state.grid)
+    end
+
+    if args.inputs.keyboard.key_down.m
+      args.state.regions = find_regions(args.state.grid)
     end
   end
 
@@ -130,6 +171,18 @@ module Main
       end
       y -= size
     end
+
+    colors = ["black", "blue", "gray", "indigo", "orange", "red", "violet", "white", "yellow"]
+    if args.state.regions != {}
+      args.state.regions.each_with_index do |r, i|
+        color = colors[(i % colors.length)]
+        r[1].each do |cell|
+          y, x = cell
+          out << {x:x*size+280, y:690 - ((y+1)*size), w:size, h:size, path:"sprites/hexagon/#{color}.png"}.sprite!
+        end
+      end
+    end
+
     out
   end
 

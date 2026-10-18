@@ -140,6 +140,53 @@ module Main
     return regions
   end
 
+  def carve_horizontal_tunnel grid, start_pos, end_pos, region
+    sy, sx = start_pos
+    ey, ex = end_pos
+
+    ([sx, ex].min() .. [sx, ex].max).each do |x|
+      if args.state.grid[sy][x] == 0
+        args.state.grid[sy][x] = 1
+        region << [sy, x]
+      end
+    end
+
+    return grid
+  end
+
+  def carve_vertical_tunnel grid, start_pos, end_pos, region
+    sy, sx = start_pos
+    ey, ex = end_pos
+
+    ([sy, ey].min() .. [sy, ey].max).each do |y|
+      if args.state.grid[y][sx] == 0
+        args.state.grid[y][sx] = 1
+        region << [sy, x]
+      end
+    end
+
+    return grid
+  end
+
+  def carve_tunnel grid, start_pos, end_pos, regions
+    region = []
+    grid = carve_horizontal_tunnel(grid, start_pos, end_pos, region)
+    cur = [start_pos[0], end_pos[1]]
+    grid = carve_vertical_tunnel(grid, cur, end_pos, region)
+    region_id = regions.length
+    region[region_id] = region
+    return grid
+  end
+
+  def carve_tunnels grid, regions
+    # Select region pair,
+    # get start_pos from region_1
+    # get end_pos from region_2
+    grid = carve_tunnel(grid, start_pos, end_pos, regions)
+
+    return grid
+  end
+
   def handle_input args
 
     if args.inputs.keyboard.key_down.r
@@ -156,6 +203,10 @@ module Main
 
     if args.inputs.keyboard.key_down.m
       args.state.regions = find_regions(args.state.grid)
+    end
+
+    if args.inputs.keyboard.key_down.t
+      args.state.grid = carve_tunnels(args.state.grid, args.state.regions)
     end
   end
 

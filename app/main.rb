@@ -51,7 +51,7 @@ module Main
         if neighbors >= create
           new_grid[row_i][col_i] = -1
         elsif neighbors == keep
-          new_grid[row_i][col_i] = col
+          new_grid[row_i][col_i] = cell
         else
           new_grid[row_i][col_i] = -2
         end

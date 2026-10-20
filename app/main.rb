@@ -138,33 +138,50 @@ module Main
   end
 
   def carve_vertical_tunnel grid, start_pos, end_pos, tunnel
+    regions = []
     sy, sx = start_pos
     ey, ex = end_pos
 
     ([sy, ey].min() .. [sy, ey].max).each do |y|
-      if args.state.grid[y][sx] == 0
+      if args.state.grid[y][sx] > -2
+        if args.state.grid[y][sx] > -1
+          regions << args.state.grid[y][sx]
+        end
         tunnel << [sy, x]
       end
     end
 
-    return tunnel
+    return tunnel, regions
   end
 
-  def carve_tunnel grid, start_pos, end_pos, regions
-    region = []
-    grid = carve_horizontal_tunnel(grid, start_pos, end_pos, region)
+  def carve_tunnel_hv grid, start_pos, end_pos, regions
+    regions = []
+    tunnel, region = carve_horizontal_tunnel(grid, start_pos, end_pos, region)
+    regions.extend(region)
     cur = [start_pos[0], end_pos[1]]
-    grid = carve_vertical_tunnel(grid, cur, end_pos, region)
-    region_id = regions.length
-    region[region_id] = region
-    return grid
+    tunnel, region = carve_vertical_tunnel(grid, cur, end_pos, region)
+    regions.extend(region)
+    return tunnel, regions
+  end
+
+  def carve_tunnel_vh grid, start_pos, end_pos, regions
+    regions = []
+    tunnel, region = carve_vertical_tunnel(grid, start_pos, end_pos, region)
+    regions.extend(region)
+    cur = [start_pos[1], end_pos[0]]
+    tunnel, region = carve_horizontal_tunnel(grid, cur, end_pos, region)
+    regions.extend(region)
+    return tunnel, regions
   end
 
   def carve_tunnels grid, regions
     # Select region pair,
     # get start_pos from region_1
     # get end_pos from region_2
-    grid = carve_tunnel(grid, start_pos, end_pos, regions)
+    tunnel, regions = carve_tunnel(grid, start_pos, end_pos, regions)
+
+    # apply tunnel to grid
+    # update all connected regions.
 
     return grid
   end

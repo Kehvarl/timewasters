@@ -1,17 +1,11 @@
 * EXCEPTION:
-* ERROR: :length method missing on ~NilClass~.
-
-#+begin_src ~NilClass#inspect~
-nil
-#+end_src ~NilClass#inspect~
+* ERROR:
+Undefined method col for main.
 
 
-
-The method named
-  :length
-doesn't exist on [NilClass, NilClassFalseClass].
-
-(suggestions above)
 ** Backtrace:
-*** app/main.rb:164:in render
-*** app/main.rb:207:in tick
+*** app/main.rb:54:in process_grid
+*** app/main.rb:49:in process_grid
+*** app/main.rb:48:in process_grid
+*** app/main.rb:196:in handle_input
+*** app/main.rb:244:in tick

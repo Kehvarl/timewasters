@@ -10,6 +10,7 @@ module Main
     args.state.grid = make_map(64, 64)
     args.state.iterations = 0
     args.state.regions = {}
+    args.state.tunnes = {}
     args.state.delay_current = args.state.delay
   end
 
@@ -119,22 +120,24 @@ module Main
         current_region +=  1
       end
     end
-    # result: list of regions and all cells in each region
-    # Maybe we should make the cells encode both wall/empty and region for faster lookup
     return regions
   end
 
   def carve_horizontal_tunnel grid, start_pos, end_pos, tunnel
+    regions = []
     sy, sx = start_pos
     ey, ex = end_pos
 
     ([sx, ex].min() .. [sx, ex].max).each do |x|
-      if args.state.grid[sy][x] == 0
+      if args.state.grid[sy][x] > -2
+        if args.state.grid[y][sx] > -1
+          regions << args.state.grid[y][sx]
+        end
         tunnel << [sy, x]
       end
     end
 
-    return tunnel
+    return tunnel, regions
   end
 
   def carve_vertical_tunnel grid, start_pos, end_pos, tunnel
@@ -175,15 +178,21 @@ module Main
   end
 
   def carve_tunnels grid, regions
+    unused_regions = regions.keys
+    tunnels = {}
+    tunnel = 0
     # Select region pair,
     # get start_pos from region_1
     # get end_pos from region_2
-    tunnel, regions = carve_tunnel(grid, start_pos, end_pos, regions)
+    tunnels, tunnel_regions = carve_tunnel(grid, start_pos, end_pos, regions)
+    unused_regions = unused_regions - tunnel_regions
 
-    # apply tunnel to grid
-    # update all connected regions.
+    tunnels.each do |t|
+      tunels[tunnel] = t
+      tunnel += 1
+    end
 
-    return grid
+    return tunnels
   end
 
   def handle_input args
@@ -205,7 +214,7 @@ module Main
     end
 
     if args.inputs.keyboard.key_down.t
-      args.state.grid = carve_tunnels(args.state.grid, args.state.regions)
+      args.state.tunnels = carve_tunnels(args.state.grid, args.state.regions)
     end
   end
 

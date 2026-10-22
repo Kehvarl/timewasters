@@ -129,9 +129,9 @@ module Main
     ey, ex = end_pos
 
     ([sx, ex].min() .. [sx, ex].max).each do |x|
-      if args.state.grid[sy][x] > -2
-        if args.state.grid[y][sx] > -1
-          regions << args.state.grid[y][sx]
+      if grid[sy][x] > -2
+        if grid[sy][x] > -1
+          regions << grid[sy][x]
         end
         tunnel << [sy, x]
       end
@@ -146,9 +146,9 @@ module Main
     ey, ex = end_pos
 
     ([sy, ey].min() .. [sy, ey].max).each do |y|
-      if args.state.grid[y][sx] > -2
-        if args.state.grid[y][sx] > -1
-          regions << args.state.grid[y][sx]
+      if grid[y][sx] > -2
+        if grid[y][sx] > -1
+          regions << grid[y][sx]
         end
         tunnel << [sy, x]
       end
@@ -179,14 +179,24 @@ module Main
 
   def carve_tunnels grid, regions
     unused_regions = regions.keys
+    used_regions = []
     tunnels = {}
     tunnel = 0
     # Select region pair,
-    # get start_pos from region_1
-    # get end_pos from region_2
-    tunnels, tunnel_regions = carve_tunnel(grid, start_pos, end_pos, regions)
-    unused_regions = unused_regions - tunnel_regions
+    if used_regions.length > 0
+      region_1 = used_regions.sample()
+    else
+      region_1 = unused_regions.sample()
+    end
 
+    region_2 = unused_regions.sample()
+    # get start_pos from region_1
+    start_pos = region_1.sample()
+    # get end_pos from region_2
+    end_pos = region_2.sample()
+    tunnels, tunnel_regions = carve_tunnel_vh(grid, start_pos, end_pos, regions)
+    unused_regions = unused_regions - tunnel_regions
+    used_regions = used_regions + tunnel_regions
     tunnels.each do |t|
       tunels[tunnel] = t
       tunnel += 1

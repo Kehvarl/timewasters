@@ -190,10 +190,9 @@ module Main
     end
 
     region_2 = unused_regions.sample()
-    # get start_pos from region_1
     start_pos = region_1.sample()
-    # get end_pos from region_2
     end_pos = region_2.sample()
+
     tunnels, tunnel_regions = carve_tunnel_vh(grid, start_pos, end_pos, regions)
     unused_regions = unused_regions - tunnel_regions
     used_regions = used_regions + tunnel_regions
@@ -265,14 +264,11 @@ module Main
     args.state.delay_current -= 1
     if args.state.delay_current <= 0
       args.state.delay_current = args.state.delay
-
       if args.state.iterations > 0
         args.state.grid = process_grid(args.state.grid)
         args.state.iterations -= 1
       end
-
     end
-
     args.outputs.primitives << render(args)
   end
 

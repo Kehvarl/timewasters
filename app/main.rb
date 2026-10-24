@@ -234,19 +234,19 @@ module Main
     args.state.grid.each do |row|
       row.each_with_index do |v, i|
         if v == -2
-          out << {x:i*size+280, y:y, w:size, h:size, path:'sprites/hexagon/green.png'}.sprite!
+          out << {x:i*size+280, y:y, w:size, h:size, path:'sprites/square/black.png'}.sprite!
         end
       end
       y -= size
     end
 
-    colors = ["black", "blue", "gray", "indigo", "orange", "red", "violet", "white", "yellow"]
+    colors = ["green", "blue", "gray", "indigo", "orange", "red", "violet", "white", "yellow"]
     if args.state.regions != {}
       args.state.regions.each_with_index do |r, i|
         color = colors[(i % colors.length)]
         r[1].each do |cell|
           y, x = cell
-          out << {x:x*size+280, y:690 - ((y+1)*size), w:size, h:size, path:"sprites/hexagon/#{color}.png"}.sprite!
+          out << {x:x*size+280, y:690 - ((y+1)*size), w:size, h:size, path:"sprites/square/#{color}.png"}.sprite!
         end
       end
     end

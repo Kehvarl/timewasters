@@ -150,7 +150,7 @@ module Main
         if grid[y][sx] > -1
           regions << grid[y][sx]
         end
-        tunnel << [sy, x]
+        tunnel << [y, sx]
       end
     end
 
@@ -159,10 +159,11 @@ module Main
 
   def carve_tunnel_hv grid, start_pos, end_pos, regions
     regions = []
-    tunnel, region = carve_horizontal_tunnel(grid, start_pos, end_pos, region)
+    tunnel = []
+    tunnel, region = carve_horizontal_tunnel(grid, start_pos, end_pos, tunnel)
     regions.extend(region)
     cur = [start_pos[0], end_pos[1]]
-    tunnel, region = carve_vertical_tunnel(grid, cur, end_pos, region)
+    tunnel, region = carve_vertical_tunnel(grid, cur, end_pos, tunnel)
     regions.extend(region)
     return tunnel, regions
   end

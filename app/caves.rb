@@ -1,4 +1,4 @@
-module Cave
+module Main
   def init args
     args.state.delay_current=10
     args.state.delay=10

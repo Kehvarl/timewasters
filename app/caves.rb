@@ -14,6 +14,10 @@ module Main
     args.state.delay_current = args.state.delay
   end
 
+  # ------------
+  # Map Building
+
+  # Create random map
   def make_map height, width
     new_grid = Array.new(height) { Array.new(width, -2) }
     new_grid.each_with_index do |row, row_i|
@@ -26,6 +30,8 @@ module Main
     return new_grid
   end
 
+  # Cellular-Automota cave making
+  # Find-wall-neighbors count
   def neighbor_count grid, row, col
     neighbors = 0
     [-1, 0, 1].each do |r|
@@ -44,6 +50,8 @@ module Main
     return neighbors
   end
 
+  # Cellular Automota
+  # Iterate grid using a kee/create rrule pair
   def process_grid grid, keep=4, create=5
     new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
     grid.each_with_index do |row, row_i|
@@ -61,6 +69,7 @@ module Main
     return new_grid
   end
 
+  # Swap wall/open on the map
   def invert_grid grid
     new_grid = Array.new(grid.length) { Array.new(grid[0].length, 0) }
     grid.each_with_index do |row, row_i|
@@ -75,6 +84,14 @@ module Main
     return new_grid
   end
 
+
+# ------------
+# Region Tools
+
+  # Starting from an empty cell
+  # Find all orthogonally-connected cells
+  # Mark the Cell with a region ID
+  # Return a list of all cells in the region
   def flood_fill grid, start, id
     rows = grid.length
     cols = grid[0].length
@@ -104,6 +121,7 @@ module Main
     region
   end
 
+  # find open spaces on the map, and convert them to Regions
   def find_regions grid
     rows = grid.length
     cols = grid[0].length
@@ -122,6 +140,9 @@ module Main
     end
     return regions
   end
+
+# -----------
+# Tunnels to Connect regions
 
   def carve_horizontal_tunnel grid, start_pos, end_pos, tunnel
     regions = []

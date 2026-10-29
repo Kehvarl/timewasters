@@ -199,6 +199,14 @@ module Main
     return tunnel, regions
   end
 
+  # Possibly smarter approach?
+  # Start with a copy of the regionified map
+  # Select the first 2 regions
+  # Connect
+  # Generate a new map (maybe just track that both regions are now region 1)
+  # repeat until no unconneccted region
+  # return tunnels lists, keep original map
+
   def carve_tunnels grid, regions
     unused_regions = regions.keys
     used_regions = []

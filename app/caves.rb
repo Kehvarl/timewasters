@@ -206,6 +206,7 @@ module Main
   # Generate a new map (maybe just track that both regions are now region 1)
   # repeat until no unconneccted region
   # return tunnels lists, keep original map
+  # Important: Keep original "regions" list, and separate "tunnels" list
 
   def carve_tunnels grid, regions
     unused_regions = regions.keys

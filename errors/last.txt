@@ -1,10 +1,10 @@
 * EXCEPTION:
 * ERROR:
 ** method_missing: sample
-** instance:       10
+** instance:       28
 ** on class:       Integer
 ** with modules:   [NumericDeprecated, ValueType, Comparable, PP::ObjectMixin, Kernel]
-** with values:    10
+** with values:    28
 ** given args:     [[]]
 ** exception:      can't define singleton
 ** backtrace:

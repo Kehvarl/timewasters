@@ -7,7 +7,7 @@ module Main
   end
 
   def restart args
-    args.state.grid = make_map(64, 64)
+    args.state.grid = make_map(96, 96)
     args.state.iterations = 0
     args.state.regions = {}
     args.state.tunnes = {}
@@ -266,7 +266,7 @@ module Main
     args.state.grid.each do |row|
       row.each_with_index do |v, i|
         if v == -2
-          out << {x:i*size+280, y:y, w:size, h:size, path:'sprites/square/black.png'}.sprite!
+          out << {x:i*size+280, y:y, w:size, h:size, path:'sprites/circle/black.png'}.sprite!
         end
       end
       y -= size

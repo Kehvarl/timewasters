@@ -215,9 +215,9 @@ module Main
     tunnel = 0
     # Select region pair,
     if used_regions.length > 0
-      region_1 = used_regions.sample()
+      region_1 = used_regions
     else
-      region_1 = unused_regions.sample()
+      region_1 = unused_regions
     end
 
     region_2 = unused_regions.sample()

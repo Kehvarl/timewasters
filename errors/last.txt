@@ -1,18 +1,18 @@
 * EXCEPTION:
 * ERROR:
 ** method_missing: sample
-** instance:       28
+** instance:       5
 ** on class:       Integer
 ** with modules:   [NumericDeprecated, ValueType, Comparable, PP::ObjectMixin, Kernel]
-** with values:    28
+** with values:    5
 ** given args:     [[]]
 ** exception:      can't define singleton
 ** backtrace:
-app/caves.rb:224:in carve_tunnels
+app/caves.rb:225:in carve_tunnels
 app/caves.rb:258:in handle_input
 app/caves.rb:294:in tick
 
 ** Backtrace:
-*** app/caves.rb:224:in carve_tunnels
+*** app/caves.rb:225:in carve_tunnels
 *** app/caves.rb:258:in handle_input
 *** app/caves.rb:294:in tick

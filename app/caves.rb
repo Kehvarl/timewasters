@@ -220,7 +220,7 @@ module Main
       region_1 = unused_regions
     end
 
-    region_2 = unused_regions.sample()
+    region_2 = unused_regions
     start_pos = region_1.sample()
     end_pos = region_2.sample()
 

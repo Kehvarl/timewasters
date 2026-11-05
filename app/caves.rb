@@ -303,5 +303,4 @@ module Main
     end
     args.outputs.primitives << render(args)
   end
-
 end

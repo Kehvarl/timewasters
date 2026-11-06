@@ -1,4 +1,4 @@
-require 'app/caves.rb'
+require 'app/spin.rb'
 
 module Main
 end

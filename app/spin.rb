@@ -51,6 +51,7 @@ module Main
     # Button 1 moves A, B
     # Button 2 moves B, C
     # Button 3 moves... C, A?   Just B?
+    # Pretty sure that's a Myst puzzle.
 
     # Honestly there has to be a game in the sine movement too
     # What else can we build?

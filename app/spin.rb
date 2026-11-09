@@ -56,6 +56,7 @@ module Main
     # Honestly there has to be a game in the sine movement too
     # What else can we build?
     # If there was a curved line primitive we could draw additive curves....
+    #or 3d curves
 
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,

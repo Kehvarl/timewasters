@@ -58,6 +58,10 @@ module Main
     # If there was a curved line primitive we could draw additive curves....
     #or 3d curves
 
+    # Next idea: Store a direction for each spinner, and reverse them on some test
+    # Maybe even do something like a combination lock where only 1 spinner can be rotated directly.
+    # The others latch or slip.
+
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,

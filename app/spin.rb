@@ -62,6 +62,8 @@ module Main
     # Maybe even do something like a combination lock where only 1 spinner can be rotated directly.
     # The others latch or slip.
 
+    # Actually, I know how a 3-code combination lock works...  how could I make the same mechanism work for more?
+
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,
                                 anchor_x: 0.5, anchor_y: 0.5,

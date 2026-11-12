@@ -63,6 +63,9 @@ module Main
     # The others latch or slip.
 
     # Actually, I know how a 3-code combination lock works...  how could I make the same mechanism work for more?
+    # Disk 2 can only be driven clockwise, if disk1's drive pin engages the disk2 drive pin.
+    # Dist 1 can be driven either direction if the disk0 drive pin engates the disk1 pin
+    # Disk 0 can be freely driven either direction and drives both others.
 
 
     args.outputs.primitives << {x:640, y:ypos, w:200, h: 200,

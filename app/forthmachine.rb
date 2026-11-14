@@ -15,6 +15,7 @@ module Main
     end
 
     def swap
+      # n1 n2 -- n2 n1
       if @data_stack.length >= 2
         temp = @data_stack[-1]
         temp2 = @data_stack[-2]
@@ -24,8 +25,16 @@ module Main
     end
 
     def dup
+      # n -- n n
       if @data_stack.lengthle > 0
         push(@data_stack[-1])
+      end
+    end
+
+    def over
+      # n1 n2 -- n1 n2 n1
+      if @data_stack.length >= 2
+        push(@data_stack[-2])
       end
     end
 
@@ -45,10 +54,12 @@ module Main
     # ALU
 
     def add
+      # n1 n2 -- (n2 + n1)
       push(pop() + pop())
     end
 
     def sub
+      # n1 n2 -- (n2 - n1)
       right = pop()
       left = pop()
       push(left - right)

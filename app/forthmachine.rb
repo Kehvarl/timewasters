@@ -38,6 +38,13 @@ module Main
       end
     end
 
+    def drop
+      # n1 --
+      if @data_stack.length >= 1
+        pop()
+      end
+    end
+
     # Return Stack Tools
     def to_r
       @return_stack << @data_stack.pop()

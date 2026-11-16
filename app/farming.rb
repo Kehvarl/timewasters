@@ -15,6 +15,12 @@ module Main
   # Trees - Fruits, Nuts, Wood, Beehives (Honey)
   # Beehives (recurring honey)
 
+  # Map: grid + Render-Target
+  # World-size = 9 screens, or 96 x 54 tiles
+  # Tile-size: 40x40 = 32 x 18 tile View
+  # View: Window on the RT
+
+
   def tick args
     if args.state.tick_count == 0
       init args

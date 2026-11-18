@@ -1,6 +1,7 @@
-require 'app/spin.rb'
+require 'app/forthmachine.rb'
 
 module Main
+
 end
 
 

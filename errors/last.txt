@@ -1,18 +1,19 @@
 * EXCEPTION:
-* ERROR:
-** method_missing: sample
-** instance:       5
-** on class:       Integer
-** with modules:   [NumericDeprecated, ValueType, Comparable, PP::ObjectMixin, Kernel]
-** with values:    5
-** given args:     [[]]
-** exception:      can't define singleton
-** backtrace:
-app/caves.rb:225:in carve_tunnels
-app/caves.rb:258:in handle_input
-app/caves.rb:294:in tick
+* ERROR: :+ method missing on ~NilClass~.
 
+#+begin_src ~NilClass#inspect~
+nil
+#+end_src ~NilClass#inspect~
+
+
+
+The method named
+  :+
+with args
+  [1]
+doesn't exist on [NilClass, NilClassFalseClass].
+
+(suggestions above)
 ** Backtrace:
-*** app/caves.rb:225:in carve_tunnels
-*** app/caves.rb:258:in handle_input
-*** app/caves.rb:294:in tick
+*** app/forthmachine.rb:18:in tick
+*** app/main.rb:13:in tick

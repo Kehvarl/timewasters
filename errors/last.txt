@@ -1,5 +1,5 @@
 * EXCEPTION:
-* ERROR: :+ method missing on ~NilClass~.
+* ERROR: :x method missing on ~NilClass~.
 
 #+begin_src ~NilClass#inspect~
 nil
@@ -8,12 +8,9 @@ nil
 
 
 The method named
-  :+
-with args
-  [1]
+  :x
 doesn't exist on [NilClass, NilClassFalseClass].
 
 (suggestions above)
 ** Backtrace:
-*** app/forthmachine.rb:18:in tick
-*** app/main.rb:13:in tick
+*** app/farming.rb:46:in tick

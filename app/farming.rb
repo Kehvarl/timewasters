@@ -1,13 +1,14 @@
 module Main
   def init args
     args.state.world = []
+    args.state.window = {}
     args.state.window.x = 0
     args.state.window.y = 0
     args.state.window.w = 1280
     args.state.window.h = 720
 
     args.outputs[:scene].w = 1280
-    args.outputs[:scene].h = 1280
+    args.outputs[:scene].h = 720
   end
 
   # Farming Game?

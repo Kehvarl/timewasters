@@ -31,6 +31,16 @@ module Main
   # View: Window on the RT
 
 
+  # Starting to think about the actual farm simulation
+  # What do crops need?
+  # PRepared Soil
+  # Planted
+  # Watered
+  # Correct sun
+  # Time
+  # HArvest
+
+
   def render args
     args.outputs[:scene].primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!
   end

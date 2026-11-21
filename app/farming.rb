@@ -38,7 +38,14 @@ module Main
   # Watered
   # Correct sun
   # Time
-  # HArvest
+  # Harvest
+
+  # Cycles
+  # Year/Seasons
+  # Month/Moon?
+  # Day
+  # Weather
+  # Plant growth Cycles
 
 
   def render args

@@ -1,18 +1,7 @@
 * EXCEPTION:
-* ERROR: :total_minutes method missing on ~NilClass~.
-
-#+begin_src ~NilClass#inspect~
-nil
-#+end_src ~NilClass#inspect~
+* ERROR:
+Undefined method moon_vi for main.
 
 
-
-The method named
-  :total_minutes
-doesn't exist on [NilClass, NilClassFalseClass].
-
-(suggestions above)
 ** Backtrace:
-*** app/farming.rb:114:in update_calendar
-*** app/farming.rb:138:in update_world
-*** app/farming.rb:158:in tick
+*** app/farming.rb:197:in tick

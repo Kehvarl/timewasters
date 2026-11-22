@@ -1,7 +1,7 @@
 * EXCEPTION:
 * ERROR:
-Undefined method moon_day for main.
+Undefined method moon_vi for main.
 
 
 ** Backtrace:
-*** app/farming.rb:177:in tick
+*** app/farming.rb:197:in tick

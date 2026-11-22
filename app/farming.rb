@@ -116,13 +116,13 @@ module Main
     total = calendar.total_minutes
 
     calendar.minute = total % 60
-    calendar.hour = (total / 60) % 24
+    calendar.hour = (total / 60).to_i % 24
 
-    total_days = total / (60 * 24)
+    total_days = (total / (60 * 24)).to_i
 
     calendar.day = (total_days % 36) + 1
-    calendar.month = ((total_days / 36) % 12) + 1
-    calendar.year = (total_days / 432) + 1
+    calendar.month = (total_days.div(36) % 12) + 1
+    calendar.year = total_days.div(432) + 1
 
     calendar.season = case calendar.month
        when 1..3 then :spring
@@ -132,6 +132,20 @@ module Main
     end
 
     calendar.moon_day = total_days % 28
+  end
+
+  def moon_times moon_day
+    minutes = (moon_day % 28) * (1440.0 / 28)
+
+    rise_hour = (6 + minutes.div(60)) % 24
+    rise_minute = (minutes % 60).to_i
+
+    rise_abs = (360 + minutes).to_i % 1440
+    set_abs = (rise_abs + 720) % 1440
+
+    set_time = (rise_hour * 60 + rise_minute + 720) % 1440
+
+    [rise_hour, rise_minute, set_time.div(60), set_time % 60, rise_abs, set_abs]
   end
 
   def update_world args
@@ -167,21 +181,33 @@ module Main
                      path: :scene}
     cal = args.state.calendar
     args.outputs <<{x:600, y:350,
-                    text:"#{cal.year.to_i}-#{cal.day.to_i} #{cal.hour.to_i}:#{cal.minute}"
+                    text:"#{cal.year}-#{cal.day} #{cal.hour}:#{cal.minute}"
                    }.label!
 
+    moon_day = cal.moon_day
+    mrh, mrm, msh, msm, mra, msa = moon_times(moon_day)
+
+    current_minutes = (cal.hour * 60 + cal.minute)
+
+    if mra < msa
+      moon_visible = current_minutes >= mra && current_minutes < msa
+    else
+      moon_visible = current_minutes >= mra || current_minutes < msa
+    end
+    puts "#{cal.hour}, #{cal.minute} = #{current_minutes} -- #{mra} - #{msa} :: #{moon_visible}"
+
+    if moon_visible
+      source_x = (moon_day % 7) * 128
+      source_y = (3 - moon_day.div(7)) * 128
+      args.outputs << {x:600, y:290, w:32, h:32,
+                       source_x: source_x,
+                       source_y: source_y,
+                       source_w: 128,
+                       source_h: 128,
+                       path: "sprites/moon-phases.png"}
+    end
     args.outputs <<{x:640, y:315,
-                    text:"#{cal.moon_day.to_i}"
-                   }.label!
-    moon_day = cal.moon_day.to_i
-    source_x = (moon_day % 7) * 128
-    source_y = (3 - moon_day.div(7)) * 128
-    puts "#{moon_day} - #{source_x} - #{source_y}"
-    args.outputs << {x:600, y:290, w:32, h:32,
-                     source_x: source_x,
-                     source_y: source_y,
-                     source_w: 128,
-                     source_h: 128,
-                     path: "sprites/moon-phases.png"}
+                   text:"#{cal.moon_day} :: #{mrh}:#{mrm} - #{msh}:#{msm}"
+                  }.label!
   end
 end

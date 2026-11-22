@@ -170,8 +170,18 @@ module Main
                     text:"#{cal.year.to_i}-#{cal.day.to_i} #{cal.hour.to_i}:#{cal.minute}"
                    }.label!
 
-    args.outputs <<{x:600, y:315,
+    args.outputs <<{x:640, y:315,
                     text:"#{cal.moon_day.to_i}"
                    }.label!
+    moon_day = cal.moon_day.to_i
+    source_x = (moon_day % 7) * 128
+    source_y = (3 - moon_day.div(7)) * 128
+    puts "#{moon_day} - #{source_x} - #{source_y}"
+    args.outputs << {x:600, y:290, w:32, h:32,
+                     source_x: source_x,
+                     source_y: source_y,
+                     source_w: 128,
+                     source_h: 128,
+                     path: "sprites/moon-phases.png"}
   end
 end

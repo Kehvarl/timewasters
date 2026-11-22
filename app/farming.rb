@@ -46,6 +46,12 @@ module Main
   # Day
   # Weather
   # Plant growth Cycles
+  # Player Hunger
+  # Player Energy
+  # Actually, should there be 1 Energy type?
+  # We could have Focus/Mental Energy for learning Stuff
+  # And Energy/Tiredness for Doing stuff.
+
 
 
   def render args

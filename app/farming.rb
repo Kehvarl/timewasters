@@ -167,7 +167,7 @@ module Main
                      path: :scene}
     cal = args.state.calendar
     args.outputs <<{x:600, y:350,
-                    text:"#{cal.year.to_i} - #{cal.day.to_i} #{cal.hour.to_i}:#{cal.minute}"
+                    text:"#{cal.year.to_i}-#{cal.day.to_i} #{cal.hour.to_i}:#{cal.minute}"
                    }.label!
 
     args.outputs <<{x:600, y:315,

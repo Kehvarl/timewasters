@@ -1,5 +1,5 @@
 * EXCEPTION:
-* ERROR: :x method missing on ~NilClass~.
+* ERROR: :total_minutes method missing on ~NilClass~.
 
 #+begin_src ~NilClass#inspect~
 nil
@@ -8,9 +8,11 @@ nil
 
 
 The method named
-  :x
+  :total_minutes
 doesn't exist on [NilClass, NilClassFalseClass].
 
 (suggestions above)
 ** Backtrace:
-*** app/farming.rb:46:in tick
+*** app/farming.rb:114:in update_calendar
+*** app/farming.rb:138:in update_world
+*** app/farming.rb:158:in tick

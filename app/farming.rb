@@ -148,6 +148,24 @@ module Main
     [rise_hour, rise_minute, set_time.div(60), set_time % 60, rise_abs, set_abs]
   end
 
+  def calc_moon_status calendar
+    moon_day = calendar.moon_day
+    mrh, mrm, msh, msm, mra, msa = moon_times(moon_day)
+
+    current_minutes = (calendar.hour * 60 + calendar.minute)
+
+    if mra < msa
+      moon_visible = current_minutes >= mra && current_minutes < msa
+    else
+      moon_visible = current_minutes >= mra || current_minutes < msa
+    end
+    #puts "#{cal.hour}, #{cal.minute} = #{current_minutes} -- #{mra} - #{msa} :: #{moon_visible}"
+    return {moon_visible:moon_visible,
+            moon_day:moon_day,
+            rise_hour:mrh, rise_minute:mrm, rise_abs:mra,
+            set_hour:msh, set_minute:msm, set_abs:mra}
+  end
+
   def update_world args
     update_calendar(args.state.calendar)
     # update_weather(args)
@@ -181,24 +199,13 @@ module Main
                      path: :scene}
     cal = args.state.calendar
     args.outputs <<{x:600, y:350,
-                    text:"#{cal.year}-#{cal.day} #{cal.hour}:#{cal.minute}"
+                    text:"#{cal.year}-#{cal.month}-#{cal.day} #{cal.hour}:#{cal.minute}"
                    }.label!
 
-    moon_day = cal.moon_day
-    mrh, mrm, msh, msm, mra, msa = moon_times(moon_day)
-
-    current_minutes = (cal.hour * 60 + cal.minute)
-
-    if mra < msa
-      moon_visible = current_minutes >= mra && current_minutes < msa
-    else
-      moon_visible = current_minutes >= mra || current_minutes < msa
-    end
-    puts "#{cal.hour}, #{cal.minute} = #{current_minutes} -- #{mra} - #{msa} :: #{moon_visible}"
-
-    if moon_visible
-      source_x = (moon_day % 7) * 128
-      source_y = (3 - moon_day.div(7)) * 128
+    moon = calc_moon_status(cal)
+    if moon.moon_visible
+      source_x = (moon.moon_day % 7) * 128
+      source_y = (3 - moon.moon_day.div(7)) * 128
       args.outputs << {x:600, y:290, w:32, h:32,
                        source_x: source_x,
                        source_y: source_y,
@@ -207,7 +214,7 @@ module Main
                        path: "sprites/moon-phases.png"}
     end
     args.outputs <<{x:640, y:315,
-                   text:"#{cal.moon_day} :: #{mrh}:#{mrm} - #{msh}:#{msm}"
+                   text:"#{moon.moon_day} :: #{moon.rise_hour}:#{moon.rise_minute} - #{moon.set_hour}:#{moon.set_minute}"
                   }.label!
   end
 end

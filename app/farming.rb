@@ -51,7 +51,7 @@ module Main
       year: 1,
       season: :spring,
       day: 1,
-      hour: 6,
+      hour: 0,
       minute: 0,
 
       total_minutes: 0,
@@ -163,7 +163,7 @@ module Main
     return {moon_visible:moon_visible,
             moon_day:moon_day,
             rise_hour:mrh, rise_minute:mrm, rise_abs:mra,
-            set_hour:msh, set_minute:msm, set_abs:mra}
+            set_hour:msh, set_minute:msm, set_abs:msa}
   end
 
   def update_world args

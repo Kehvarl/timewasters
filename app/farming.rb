@@ -47,6 +47,8 @@ module Main
   # And Energy/Tiredness for Doing stuff.
 
   def init_world args
+    args.state.time_scale = 1
+
     args.state.calendar = {
       year: 1,
       season: :spring,
@@ -55,6 +57,11 @@ module Main
       minute: 0,
 
       total_minutes: 0,
+    }
+
+    args.state.environment = {
+      sunlight: 0.8,
+      temperature: 22
     }
 
     args.state.world_map = Array.new(54) do
@@ -84,7 +91,6 @@ module Main
       growth: 0,
       growth_stages: 5,
       water: 50,
-      soil_quality: 80,
       health: 100
     }
   end
@@ -166,37 +172,59 @@ module Main
             set_hour:msh, set_minute:msm, set_abs:msa}
   end
 
+  def update_plants args
+    args.plants.each do |id, plant|
+      tile = world_map[plant.y][plant.x]
+      update_plant(plant, args.state.environment, tile)
+    end
+  end
+
+  def update_plant plant, environment, tile
+    if plant.health <= 0
+      return
+    end
+
+    if not environment.temperature.between?(plant.min_temperature, plant.max_temperature)
+      return
+    end
+
+    if plant.water <= 0
+      return
+    end
+
+    if tile.fertility <= 0
+      return
+    end
+
+    growth = plant.growth_rate
+
+    growth *= environment.sunlight
+    growth *= tile.fertility / 100.0
+    growth *= plant.water / 100.0
+
+    plant.growth += growth
+    plant.water -= plant.water_consumption
+  end
+
   def update_world args
     update_calendar(args.state.calendar)
+
+    # Update hourly
     # update_weather(args)
     # update_environment(args)
 
+    # Update Daily
     # update_plants(args)
+    # update_trees(args)
     # update_animals(args)
     # update_buildings(args)
-    # update_animals(args)
   end
 
-  def render args
+  def update_render_target args
     args.outputs[:scene].primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!
   end
 
-  def tick args
-    if args.state.tick_count == 0
-      init(args)
-      init_world(args)
-    end
-
-    update_world(args)
-
-    render(args)
-
-    args.outputs << {x:0, y:0, w:1280, h:720,
-                     target_x: args.state.window.x,
-                     target_y: args.state.window.y,
-                     target_w: args.state.window.w,
-                     target_h: args.state.window.h,
-                     path: :scene}
+  def render_ui args
     cal = args.state.calendar
     args.outputs <<{x:600, y:350,
                     text:"#{cal.year}-#{cal.month}-#{cal.day} #{cal.hour}:#{cal.minute}"
@@ -216,5 +244,28 @@ module Main
     args.outputs <<{x:640, y:315,
                    text:"#{moon.moon_day} :: #{moon.rise_hour}:#{moon.rise_minute} - #{moon.set_hour}:#{moon.set_minute}"
                   }.label!
+  end
+
+  def render args
+    args.outputs << {x:0, y:0, w:1280, h:720,
+                     target_x: args.state.window.x,
+                     target_y: args.state.window.y,
+                     target_w: args.state.window.w,
+                     target_h: args.state.window.h,
+                     path: :scene}
+    render_ui(args)
+  end
+
+  def tick args
+    if args.state.tick_count == 0
+      init(args)
+      init_world(args)
+    end
+
+    update_world(args)
+
+    update_render_target (args)
+
+    render(args)
   end
 end

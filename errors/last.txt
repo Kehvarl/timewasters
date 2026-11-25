@@ -1,7 +1,14 @@
 * EXCEPTION:
-* ERROR:
-Undefined method moon_vi for main.
-
-
+* ERROR: Exception while requiring app/main.rb.
+* ERROR: Exception while requiring app/farming.rb.
+* ERROR: Exception while requiring farming_cal.rb.
+farming_cal.rb does not exist.
 ** Backtrace:
-*** app/farming.rb:197:in tick
+*** app/farming.rb:1
+*** app/main.rb:1
+** Backtrace:
+*** app/farming.rb:1
+*** app/main.rb:1
+** Backtrace:
+*** app/main.rb:1
+** Backtrace:

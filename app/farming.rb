@@ -61,6 +61,10 @@ module Main
       total_minutes: 0,
     }
 
+    args.state.weather = {
+      
+    }
+
     args.state.environment = {
       sunlight: 0.8,
       temperature: 22

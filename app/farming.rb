@@ -62,7 +62,7 @@ module Main
     }
 
     args.state.weather = {
-      
+
     }
 
     args.state.environment = {
@@ -154,6 +154,25 @@ module Main
 
     plant.growth += growth
     plant.water -= plant.water_consumption
+  end
+
+  def update_trees args
+    args.trees.each do |id, tree|
+      tile = world_map[tree.y][tree.x]
+      update_tree(tree, args.state.environment, tile)
+    end
+  end
+
+  def update_tree tree, environment, tile
+    if tree.health <= 0
+      return
+    end
+
+    # Check for Changes
+    # Age
+    # Fruit
+    # Growth (Size, Wood qty, etc)
+
   end
 
   def update_world args

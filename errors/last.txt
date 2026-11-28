@@ -1,8 +1,20 @@
 * EXCEPTION:
-* ERROR:
-Undefined method update_moon for main.
+* ERROR: :% method missing on ~NilClass~.
+
+#+begin_src ~NilClass#inspect~
+nil
+#+end_src ~NilClass#inspect~
 
 
+
+The method named
+  :%
+with args
+  [7]
+doesn't exist on [NilClass, NilClassFalseClass].
+
+(suggestions above)
 ** Backtrace:
-*** app/farming.rb:186:in update_world
-*** app/farming.rb:225:in tick
+*** app/farming_cal.rb:83:in render_cal
+*** app/farming.rb:216:in render
+*** app/farming.rb:229:in tick

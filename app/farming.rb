@@ -59,6 +59,7 @@ module Main
       minute: 0,
 
       moon_day: 0,
+      next_moon_day: 0,
 
       total_minutes: 0,
     }

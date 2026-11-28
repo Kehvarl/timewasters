@@ -1,8 +1,5 @@
 module Main
 
-    LUNAR_CYCLE_DAYS = 28
-    DAY_MINUTES = 1440
-
     def update_calendar calendar
       calendar.total_minutes += 1
 
@@ -24,11 +21,11 @@ module Main
          when 10..12 then :winter
       end
 
-      calendar.next_moon_day = total_days % 28
+      calendar.moon_day = total_days % 28
     end
 
-    def moon_times moon
-      minutes = (moon.moon_day % 28) * (1440.0 / 28)
+    def moon_times moon_day
+      minutes = (moon_day % 28) * (1440.0 / 28)
 
       rise_hour = (6 + minutes.div(60)) % 24
       rise_minute = (minutes % 60).to_i
@@ -42,36 +39,21 @@ module Main
     end
 
     def calc_moon_status calendar
-      total_minutes = calendar.total_minutes
+      moon_day = calendar.moon_day
+      mrh, mrm, msh, msm, mra, msa = moon_times(moon_day)
 
-      # Continuous lunar phase: 0.0 through just under 28.0
-      phase = (total_minutes.to_f / DAY_MINUTES) % LUNAR_CYCLE_DAYS
+      current_minutes = (calendar.hour * 60 + calendar.minute)
 
-      # Discrete sprite index, transitions halfway between phases
-      moon_day = (phase + 0.5).floor % LUNAR_CYCLE_DAYS
-
-      rise_abs = (360 + phase.to_i * DAY_MINUTES / LUNAR_CYCLE_DAYS).to_i % DAY_MINUTES
-      set_abs = (rise_abs + 720) % DAY_MINUTES
-
-      current_minutes = calendar.hour * 60 + calendar.minute
-
-      if rise_abs < set_abs
-        moon_visible = current_minutes >= rise_abs && current_minutes < set_abs
+      if mra < msa
+        moon_visible = current_minutes >= mra && current_minutes < msa
       else
-        moon_visible = current_minutes >= rise_abs || current_minutes < set_abs
+        moon_visible = current_minutes >= mra || current_minutes < msa
       end
-
-      {
-        moon_visible: moon_visible,
-        moon_day: moon_day,
-        phase: phase,
-        rise_abs: rise_abs,
-        set_abs: set_abs,
-        rise_hour: rise_abs / 60,
-        rise_minute: rise_abs % 60,
-        set_hour: set_abs / 60,
-        set_minute: set_abs % 60
-      }
+      #puts "#{cal.hour}, #{cal.minute} = #{current_minutes} -- #{mra} - #{msa} :: #{moon_visible}"
+      return {moon_visible:moon_visible,
+              moon_day:moon_day,
+              rise_hour:mrh, rise_minute:mrm, rise_abs:mra,
+              set_hour:msh, set_minute:msm, set_abs:msa}
     end
 
     def render_cal args

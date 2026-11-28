@@ -1,5 +1,8 @@
 module Main
 
+    LUNAR_CYCLE_DAYS = 28
+    DAY_MINUTES = 1440
+
     def update_calendar calendar
       calendar.total_minutes += 1
 
@@ -22,13 +25,6 @@ module Main
       end
 
       calendar.next_moon_day = total_days % 28
-      update_moon(calendar)
-    end
-
-    def update_moon moon
-      moon.total_minutes += 1
-
-      moon_day = (moon.total_minutes / 1440) % 28
     end
 
     def moon_times moon
@@ -45,22 +41,37 @@ module Main
       [rise_hour, rise_minute, set_time.div(60), set_time % 60, rise_abs, set_abs]
     end
 
-    def calc_moon_status moon, calendar
-      moon_day = moon.moon_day
-      mrh, mrm, msh, msm, mra, msa = moon_times(moon)
+    def calc_moon_status calendar
+      total_minutes = calendar.total_minutes
 
-      current_minutes = (calendar.hour * 60 + calendar.minute)
+      # Continuous lunar phase: 0.0 through just under 28.0
+      phase = (total_minutes.to_f / DAY_MINUTES) % LUNAR_CYCLE_DAYS
 
-      if mra < msa
-        moon_visible = current_minutes >= mra && current_minutes < msa
+      # Discrete sprite index, transitions halfway between phases
+      moon_day = (phase + 0.5).floor % LUNAR_CYCLE_DAYS
+
+      rise_abs = (360 + phase.to_i * DAY_MINUTES / LUNAR_CYCLE_DAYS).to_i % DAY_MINUTES
+      set_abs = (rise_abs + 720) % DAY_MINUTES
+
+      current_minutes = calendar.hour * 60 + calendar.minute
+
+      if rise_abs < set_abs
+        moon_visible = current_minutes >= rise_abs && current_minutes < set_abs
       else
-        moon_visible = current_minutes >= mra || current_minutes < msa
+        moon_visible = current_minutes >= rise_abs || current_minutes < set_abs
       end
-      #puts "#{cal.hour}, #{cal.minute} = #{current_minutes} -- #{mra} - #{msa} :: #{moon_visible}"
-      return {moon_visible:moon_visible,
-              moon_day:moon_day,
-              rise_hour:mrh, rise_minute:mrm, rise_abs:mra,
-              set_hour:msh, set_minute:msm, set_abs:msa}
+
+      {
+        moon_visible: moon_visible,
+        moon_day: moon_day,
+        phase: phase,
+        rise_abs: rise_abs,
+        set_abs: set_abs,
+        rise_hour: rise_abs / 60,
+        rise_minute: rise_abs % 60,
+        set_hour: set_abs / 60,
+        set_minute: set_abs % 60
+      }
     end
 
     def render_cal args
@@ -69,7 +80,7 @@ module Main
                       text:"#{cal.year}-#{cal.month}-#{cal.day} #{cal.hour}:#{cal.minute}"
                      }.label!
 
-      moon = calc_moon_status(args.state.moon, cal)
+      moon = calc_moon_status(cal)
       if moon.moon_visible
         source_x = (moon.moon_day % 7) * 128
         source_y = (3 - moon.moon_day.div(7)) * 128

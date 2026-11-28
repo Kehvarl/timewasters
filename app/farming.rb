@@ -58,12 +58,9 @@ module Main
       hour: 0,
       minute: 0,
 
-      total_minutes: 0,
-    }
-
-    args.state.moon = {
-      total_minutes: 0,
       moon_day: 0,
+
+      total_minutes: 0,
     }
 
     args.state.weather = {
@@ -186,7 +183,6 @@ module Main
     #calendar.total_minutes += args.state.time_scale
 
     update_calendar(calendar)
-    update_moon(args.state.moon)
 
     # Update hourly
     # update_weather(args)

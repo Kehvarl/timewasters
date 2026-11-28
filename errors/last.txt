@@ -1,19 +1,8 @@
 * EXCEPTION:
-* ERROR: :moon_day method missing on ~NilClass~.
-
-#+begin_src ~NilClass#inspect~
-nil
-#+end_src ~NilClass#inspect~
+* ERROR:
+Undefined method update_moon for main.
 
 
-
-The method named
-  :moon_day
-doesn't exist on [NilClass, NilClassFalseClass].
-
-(suggestions above)
 ** Backtrace:
-*** app/farming_cal.rb:49:in calc_moon_status
-*** app/farming_cal.rb:72:in render_cal
-*** app/farming.rb:219:in render
-*** app/farming.rb:232:in tick
+*** app/farming.rb:186:in update_world
+*** app/farming.rb:225:in tick

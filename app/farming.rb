@@ -78,6 +78,7 @@ module Main
           tree_id: nil,
           building_id: nil,
           pickups: [],
+          water: 50,
           fertility: 100
         }
       end
@@ -96,7 +97,7 @@ module Main
       planted_day: 12,
       growth: 0,
       growth_stages: 5,
-      water: 50,
+      water_consumption: 0.5,
       health: 100
     }
   end
@@ -138,7 +139,7 @@ module Main
       return
     end
 
-    if plant.water <= 0
+    if tile.water <= 0
       return
     end
 
@@ -150,10 +151,9 @@ module Main
 
     growth *= environment.sunlight
     growth *= tile.fertility / 100.0
-    growth *= plant.water / 100.0
 
     plant.growth += growth
-    plant.water -= plant.water_consumption
+    tile.water -= plant.water_consumption
   end
 
   def update_trees args
@@ -176,7 +176,11 @@ module Main
   end
 
   def update_world args
-    update_calendar(args.state.calendar)
+    calendar = args.state.calendar
+
+    calendar.total_minutes += args.state.time_scale
+
+    update_calendar(calendar)
 
     # Update hourly
     # update_weather(args)
@@ -191,6 +195,12 @@ module Main
 
   def update_render_target args
     args.outputs[:scene].primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!
+
+    args.state.world_map.each_with_index do |row, y|
+      row.each_with_index do |tile, x|
+        args.outputs[:scene].primitives << {x:x*40, y:680 - y*40, w:40, h:40, path:'sprites/square/green.png'}.sprite!
+      end
+    end
   end
 
   def render args

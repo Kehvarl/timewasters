@@ -76,5 +76,5 @@ module Main
       args.outputs <<{x:640, y:315,
                      text:"#{moon.moon_day} :: #{moon.rise_hour}:#{moon.rise_minute} - #{moon.set_hour}:#{moon.set_minute}"
                     }.label!
-    end    
+    end
 end

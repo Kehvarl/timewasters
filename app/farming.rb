@@ -58,6 +58,9 @@ module Main
       hour: 0,
       minute: 0,
 
+      moon_day: 0,
+      next_moon_day: 0,
+
       total_minutes: 0,
     }
 
@@ -178,7 +181,7 @@ module Main
   def update_world args
     calendar = args.state.calendar
 
-    calendar.total_minutes += args.state.time_scale
+    #calendar.total_minutes += args.state.time_scale
 
     update_calendar(calendar)
 

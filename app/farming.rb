@@ -59,7 +59,7 @@ module Main
       minute: 0,
 
       moon_day: 0,
-      next_moon_day: 0,
+      displayed_moon_day: 0,
 
       total_minutes: 0,
     }
@@ -184,6 +184,7 @@ module Main
     #calendar.total_minutes += args.state.time_scale
 
     update_calendar(calendar)
+    update_moon_sprite(calendar)
 
     # Update hourly
     # update_weather(args)
@@ -197,8 +198,6 @@ module Main
   end
 
   def update_render_target args
-    args.outputs[:scene].primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!
-
     args.state.world_map.each_with_index do |row, y|
       row.each_with_index do |tile, x|
         args.outputs[:scene].primitives << {x:x*40, y:680 - y*40, w:40, h:40, path:'sprites/square/green.png'}.sprite!
@@ -207,10 +206,11 @@ module Main
   end
 
   def render args
-    args.outputs << {x:0, y:0, w:1280, h:720,
+    args.outputs.primitives << {x:0, y:0, w:1280, h:720, r:128, g:128, b:128}.solid!
+    args.outputs << {x:0, y:0, w:1040, h:720,
                      target_x: args.state.window.x,
                      target_y: args.state.window.y,
-                     target_w: args.state.window.w,
+                     target_w: args.state.window.w - 240,
                      target_h: args.state.window.h,
                      path: :scene}
     render_cal(args)

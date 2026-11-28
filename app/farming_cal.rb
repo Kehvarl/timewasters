@@ -21,11 +21,18 @@ module Main
          when 10..12 then :winter
       end
 
-      calendar.moon_day = total_days % 28
+      calendar.next_moon_day = total_days % 28
+      update_moon(calendar)
     end
 
-    def moon_times moon_day
-      minutes = (moon_day % 28) * (1440.0 / 28)
+    def update_moon moon
+      moon.total_minutes += 1
+
+      moon_day = (moon.total_minutes / 1440) % 28
+    end
+
+    def moon_times moon
+      minutes = (moon.moon_day % 28) * (1440.0 / 28)
 
       rise_hour = (6 + minutes.div(60)) % 24
       rise_minute = (minutes % 60).to_i
@@ -38,9 +45,9 @@ module Main
       [rise_hour, rise_minute, set_time.div(60), set_time % 60, rise_abs, set_abs]
     end
 
-    def calc_moon_status calendar
-      moon_day = calendar.moon_day
-      mrh, mrm, msh, msm, mra, msa = moon_times(moon_day)
+    def calc_moon_status moon, calendar
+      moon_day = moon.moon_day
+      mrh, mrm, msh, msm, mra, msa = moon_times(moon)
 
       current_minutes = (calendar.hour * 60 + calendar.minute)
 
@@ -62,7 +69,7 @@ module Main
                       text:"#{cal.year}-#{cal.month}-#{cal.day} #{cal.hour}:#{cal.minute}"
                      }.label!
 
-      moon = calc_moon_status(cal)
+      moon = calc_moon_status(args.state.moon, cal)
       if moon.moon_visible
         source_x = (moon.moon_day % 7) * 128
         source_y = (3 - moon.moon_day.div(7)) * 128
@@ -76,5 +83,5 @@ module Main
       args.outputs <<{x:640, y:315,
                      text:"#{moon.moon_day} :: #{moon.rise_hour}:#{moon.rise_minute} - #{moon.set_hour}:#{moon.set_minute}"
                     }.label!
-    end    
+    end
 end

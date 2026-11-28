@@ -24,18 +24,27 @@ module Main
       calendar.moon_day = total_days % 28
     end
 
+    def update_moon_sprite calendar
+      moon = calc_moon_status(calendar)
+
+      unless moon.moon_visible
+        calendar.displayed_moon_day = calendar.moon_day
+      end
+    end
+
     def moon_times moon_day
       minutes = (moon_day % 28) * (1440.0 / 28)
-
-      rise_hour = (6 + minutes.div(60)) % 24
-      rise_minute = (minutes % 60).to_i
 
       rise_abs = (360 + minutes).to_i % 1440
       set_abs = (rise_abs + 720) % 1440
 
-      set_time = (rise_hour * 60 + rise_minute + 720) % 1440
+      rise_hour = rise_abs.div(60)
+      rise_minute = rise_abs % 60
 
-      [rise_hour, rise_minute, set_time.div(60), set_time % 60, rise_abs, set_abs]
+      set_hour = set_abs.div(60)
+      set_minute = set_abs % 60
+
+      [rise_hour, rise_minute, set_hour, set_minute, rise_abs, set_abs]
     end
 
     def calc_moon_status calendar
@@ -58,22 +67,25 @@ module Main
 
     def render_cal args
       cal = args.state.calendar
-      args.outputs <<{x:600, y:350,
-                      text:"#{cal.year}-#{cal.month}-#{cal.day} #{cal.hour}:#{cal.minute}"
+      args.outputs <<{x:1080, y:690, text: "%04d-%02d-%02d %02d:%02d" % [
+                                            cal.year, cal.month,
+                                            cal.day, cal.hour, cal.minute]
                      }.label!
 
       moon = calc_moon_status(cal)
       if moon.moon_visible
-        source_x = (moon.moon_day % 7) * 128
-        source_y = (3 - moon.moon_day.div(7)) * 128
-        args.outputs << {x:600, y:290, w:32, h:32,
+        sprite_day = cal.displayed_moon_day
+
+        source_x = (sprite_day % 7) * 128
+        source_y = (3 - sprite_day.div(7)) * 128
+        args.outputs << {x:1040, y:630, w:32, h:32,
                          source_x: source_x,
                          source_y: source_y,
                          source_w: 128,
                          source_h: 128,
                          path: "sprites/moon-phases.png"}
       end
-      args.outputs <<{x:640, y:315,
+      args.outputs <<{x:1080, y:655,
                      text:"#{moon.moon_day} :: #{moon.rise_hour}:#{moon.rise_minute} - #{moon.set_hour}:#{moon.set_minute}"
                     }.label!
     end
